@@ -22,7 +22,7 @@ public class ChatController {
 
     @PostMapping("/chat")
     public ChatResponse chat(@RequestBody ChatRequest chatRequest) {
-        String responseMessage = chatService.chat(chatRequest.getQuery());
+        String responseMessage = chatService.chat(chatRequest.getBotId(), chatRequest.getQuery());
         return new ChatResponse(responseMessage);
     }
 }
