@@ -1,25 +1,31 @@
 package com.alibaba.cloud.ai.workflow;
 
 import com.alibaba.cloud.ai.dto.NodeDto;
-import com.fasterxml.jackson.databind.JsonNode;
 
-import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public interface NodeExecutor {
 
-    /**
-     * Executes the logic for a specific workflow node.
-     *
-     * @param node      The node to execute.
-     * @param context   The execution context containing the state of the workflow.
-     * @return A map of output values produced by the node.
-     */
-    Map<String, JsonNode> execute(NodeDto node, WorkflowExecutionContext context);
+    WorkflowExecutionContext execute(WorkflowExecutionContext context, NodeDto node);
 
-    /**
-     * Returns the type of node this executor is responsible for.
-     * This should match the 'type' field in the workflow canvas JSON.
-     * @return The node type identifier.
-     */
-    String getNodeType();
+    default String resolveVariable(String value, WorkflowExecutionContext context) {
+        if (value == null || !value.contains("{{") || !value.contains("}}")) {
+            return value;
+        }
+
+        Pattern pattern = Pattern.compile("\\{\\{([^}]+)\\}\\}");
+        Matcher matcher = pattern.matcher(value);
+
+        StringBuilder resolvedValue = new StringBuilder();
+        while (matcher.find()) {
+            String variablePath = matcher.group(1);
+            Object variableValue = context.getVariable(variablePath);
+            String replacement = (variableValue != null) ? variableValue.toString() : "";
+            matcher.appendReplacement(resolvedValue, Matcher.quoteReplacement(replacement));
+        }
+        matcher.appendTail(resolvedValue);
+
+        return resolvedValue.toString();
+    }
 }

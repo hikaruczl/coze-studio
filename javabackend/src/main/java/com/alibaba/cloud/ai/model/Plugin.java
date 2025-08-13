@@ -34,6 +34,11 @@ public class Plugin {
     @Column(columnDefinition = "TEXT")
     private String manifest; // Stores the plugin manifest JSON
 
+    @Enumerated(EnumType.STRING)
+    private PluginType type;
+
+    private Boolean published = false;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -134,5 +139,21 @@ public class Plugin {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public PluginType getType() {
+        return type;
+    }
+
+    public void setType(PluginType type) {
+        this.type = type;
+    }
+
+    public Boolean getPublished() {
+        return published;
+    }
+
+    public void setPublished(Boolean published) {
+        this.published = published;
     }
 }

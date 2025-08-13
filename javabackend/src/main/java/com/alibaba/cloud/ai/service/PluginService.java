@@ -42,4 +42,33 @@ public class PluginService {
     public Optional<Plugin> getPluginInfo(Long pluginId) {
         return pluginRepository.findById(pluginId);
     }
+
+    public Optional<Plugin> updatePlugin(Long pluginId, UpdatePluginRequest request) {
+        return pluginRepository.findById(pluginId).map(plugin -> {
+            if (request.getName() != null) {
+                plugin.setName(request.getName());
+            }
+            if (request.getDescription() != null) {
+                plugin.setDescription(request.getDescription());
+            }
+            if (request.getType() != null) {
+                plugin.setType(request.getType());
+            }
+            if (request.getOpenapiDoc() != null) {
+                plugin.setOpenapiDoc(request.getOpenapiDoc());
+            }
+            return pluginRepository.save(plugin);
+        });
+    }
+
+    public void deletePlugin(Long pluginId) {
+        pluginRepository.deleteById(pluginId);
+    }
+
+    public Optional<Plugin> publishPlugin(Long pluginId) {
+        return pluginRepository.findById(pluginId).map(plugin -> {
+            plugin.setPublished(true);
+            return pluginRepository.save(plugin);
+        });
+    }
 }

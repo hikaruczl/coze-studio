@@ -99,4 +99,24 @@ public class PluginController {
         @JsonProperty("plugin_id")
         private Long pluginId;
     }
+
+    @PostMapping("/update")
+    public ResponseEntity<?> updatePlugin(@RequestBody UpdatePluginRequest request, @RequestParam Long pluginId) {
+        Optional<Plugin> updatedPlugin = pluginService.updatePlugin(pluginId, request);
+        return updatedPlugin.map(p -> ResponseEntity.ok(new PluginInfoResponse(p)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<Void> deletePlugin(@RequestBody PluginIdRequest request) {
+        pluginService.deletePlugin(request.getPluginId());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/publish")
+    public ResponseEntity<?> publishPlugin(@RequestBody PluginIdRequest request) {
+        Optional<Plugin> publishedPlugin = pluginService.publishPlugin(request.getPluginId());
+        return publishedPlugin.map(p -> ResponseEntity.ok(new PluginInfoResponse(p)))
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
