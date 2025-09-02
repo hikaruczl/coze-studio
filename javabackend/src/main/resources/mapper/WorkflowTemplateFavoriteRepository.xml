@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coze.studio.repository.WorkflowTemplateFavoriteRepository">
+
+    <!-- 基础CRUD操作 -->
+    
+    <!-- 保存实体 -->
+    <insert id="save" parameterType="Object" useGeneratedKeys="true" keyProperty="id">
+        <!-- TODO: 实现保存逻辑 -->
+        INSERT INTO table_name (column1, column2) VALUES (#{field1}, #{field2})
+    </insert>
+    
+    <!-- 根据ID查找 -->
+    <select id="findById" parameterType="Long" resultType="Object">
+        <!-- TODO: 实现查找逻辑 -->
+        SELECT * FROM table_name WHERE id = #{id}
+    </select>
+    
+    <!-- 查找所有 -->
+    <select id="findAll" resultType="Object">
+        <!-- TODO: 实现查找所有逻辑 -->
+        SELECT * FROM table_name
+    </select>
+    
+    <!-- 检查是否存在 -->
+    <select id="existsById" parameterType="Long" resultType="boolean">
+        <!-- TODO: 实现存在检查逻辑 -->
+        SELECT COUNT(*) > 0 FROM table_name WHERE id = #{id}
+    </select>
+    
+    <!-- 计数 -->
+    <select id="count" resultType="long">
+        <!-- TODO: 实现计数逻辑 -->
+        SELECT COUNT(*) FROM table_name
+    </select>
+    
+    <!-- 删除 -->
+    <delete id="deleteById" parameterType="Long">
+        <!-- TODO: 实现删除逻辑 -->
+        DELETE FROM table_name WHERE id = #{id}
+    </delete>
+    
+    <!-- 自定义查询方法将在这里添加 -->
+    <!-- TODO: 根据具体Repository接口添加相应的查询方法 -->
+    
+</mapper>

@@ -1,9 +1,0 @@
-package com.alibaba.cloud.ai.repository;
-
-import com.alibaba.cloud.ai.model.Workflow;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface WorkflowRepository extends JpaRepository<Workflow, Long> {
-}
